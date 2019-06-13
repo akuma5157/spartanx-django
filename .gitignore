@@ -103,3 +103,5 @@ ve/
 .mypy_cache/
 
 *.pyc
+
+*secret.json
