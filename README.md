@@ -2,5 +2,6 @@
 [![Coverage Status](https://coveralls.io/repos/github/spartanAJ/spartanx-django/badge.svg?branch=master)](https://coveralls.io/github/spartanAJ/spartanx-django?branch=master)
 
 # spartanx-django
+visit app at [Google App Engine](https://serene-column-179904.appspot.com)  
 this project uses [swagger-django-generator](https://github.com/spartanAJ/swagger-django-generator)   
 checkout the API on [SwaggerUI](https://editor.swagger.io?url=https://raw.githubusercontent.com/spartanAJ/spartanx-django/master/swagger-spec.yml)
