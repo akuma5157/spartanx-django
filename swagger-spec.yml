@@ -1,0 +1,37 @@
+---
+swagger: "2.0"
+info:
+  description: "spartanx"
+  version: "0.1"
+  title: "spartanx"
+  contact:
+    email: "ajay.kumar.19495@gmail.com"
+  license:
+    name: "License"
+    url: "https://github.com/spartanAJ/spartanx-django/blob/master/LICENSE"
+tags:
+- name: "spec"
+schemes:
+- "https"
+paths:
+  /:
+    get:
+      tags:
+      - "spec"
+      operationId: "getSpec"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
+  basicAuth:
+    type: basic

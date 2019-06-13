@@ -1,0 +1,56 @@
+{
+    "info": {
+        "contact": {
+            "email": "ajay.kumar.19495@gmail.com"
+        },
+        "description": "spartanx",
+        "license": {
+            "name": "License",
+            "url": "https://github.com/spartanAJ/spartanx-django/blob/master/LICENSE"
+        },
+        "title": "spartanx",
+        "version": "0.1"
+    },
+    "paths": {
+        "/": {
+            "get": {
+                "operationId": "getSpec",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "200 response",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "spec"
+                ]
+            }
+        }
+    },
+    "schemes": [
+        "https"
+    ],
+    "securityDefinitions": {
+        "api_key": {
+            "in": "header",
+            "name": "Authorization",
+            "type": "apiKey"
+        },
+        "basicAuth": {
+            "type": "basic"
+        }
+    },
+    "swagger": "2.0",
+    "tags": [
+        {
+            "name": "spec"
+        }
+    ]
+}
