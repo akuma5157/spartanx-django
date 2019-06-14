@@ -52,7 +52,7 @@ class CoreTest(TestCase):
     @tag('get', 'getTweets')
     def test_getTweets(self):
         # Create an instance of a GET request.
-        vars = dict(keyword=None, )
+        vars = dict(keyword="halo", )
         request = self.factory.get('tweets/', vars)
         add_session_to_request(request)
 

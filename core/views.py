@@ -124,7 +124,7 @@ class Tweets(View):
 
             keyword = request.GET.get("keyword")
 
-            schema = {'type': 'string'}
+            schema = {'type': 'string', 'default': 'halo'}
             utils.validate(keyword, schema)
             result = Stubs.getTweets(request, keyword, )
 

@@ -42,6 +42,7 @@ paths:
         in: query
         type: string
         required: true
+        default: 'halo'
       responses:
         200:
           description: 200 responses

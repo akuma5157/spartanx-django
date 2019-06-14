@@ -23,7 +23,7 @@ class AbstractStubClass(object):
         :param request: An HttpRequest
         :param keyword: 
         :type keyword: string
-        :default keyword: None
+        :default keyword: halo
         """
         raise NotImplementedError()
 
