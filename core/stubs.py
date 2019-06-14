@@ -16,4 +16,15 @@ class AbstractStubClass(object):
         """
         raise NotImplementedError()
 
+    # getTweets -- Synchronisation point for meld
+    @staticmethod
+    def getTweets(request, keyword, *args, **kwargs):
+        """
+        :param request: An HttpRequest
+        :param keyword: 
+        :type keyword: string
+        :default keyword: None
+        """
+        raise NotImplementedError()
+
 

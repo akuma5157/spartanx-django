@@ -18,3 +18,6 @@ class Implementation(AbstractStubClass):
         except EnvironmentError:
             spec = "No Swagger Spec available"
         return spec
+
+    def getTweets(request, keyword, *args, **kwargs):
+        return "keyword: '{}' recieved".format(keyword)

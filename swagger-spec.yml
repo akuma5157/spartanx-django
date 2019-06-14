@@ -1,37 +1,47 @@
 ---
 swagger: "2.0"
 info:
-  description: "spartanx"
+  description: spartanx
   version: "0.1"
-  title: "spartanx"
+  title: spartanx
   contact:
-    email: "ajay.kumar.19495@gmail.com"
+    email: ajay.kumar.19495@gmail.com
   license:
-    name: "License"
-    url: "https://github.com/spartanAJ/spartanx-django/blob/master/LICENSE"
+    name: License
+    url: https://github.com/spartanAJ/spartanx-django/blob/master/LICENSE
+host: serene-column-179904.appspot.com
+basePath: /
 tags:
-- name: "spec"
+- name: spec
+- name: tweets
 schemes:
-- "https"
+- https
 paths:
   /:
     get:
       tags:
-      - "spec"
-      operationId: "getSpec"
+      - spec
+      operationId: getSpec
       produces:
-      - "application/json"
+      - application/json
       responses:
         200:
-          description: "200 response"
+          description: 200 response
           headers:
             Access-Control-Allow-Origin:
-              type: "string"
-
-securityDefinitions:
-  api_key:
-    type: "apiKey"
-    name: "Authorization"
-    in: "header"
-  basicAuth:
-    type: basic
+              type: string
+  "/tweets/":
+    get:
+      tags:
+      - tweets
+      operationId: getTweets
+      produces:
+      - application/json
+      parameters:
+      - name: keyword
+        in: query
+        type: string
+        required: true
+      responses:
+        200:
+          description: 200 responses

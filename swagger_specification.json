@@ -1,4 +1,6 @@
 {
+    "basePath": "/",
+    "host": "serene-column-179904.appspot.com",
     "info": {
         "contact": {
             "email": "ajay.kumar.19495@gmail.com"
@@ -32,25 +34,42 @@
                     "spec"
                 ]
             }
+        },
+        "/tweets/": {
+            "get": {
+                "operationId": "getTweets",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "keyword",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "200 responses"
+                    }
+                },
+                "tags": [
+                    "tweets"
+                ]
+            }
         }
     },
     "schemes": [
         "https"
     ],
-    "securityDefinitions": {
-        "api_key": {
-            "in": "header",
-            "name": "Authorization",
-            "type": "apiKey"
-        },
-        "basicAuth": {
-            "type": "basic"
-        }
-    },
     "swagger": "2.0",
     "tags": [
         {
             "name": "spec"
+        },
+        {
+            "name": "tweets"
         }
     ]
 }

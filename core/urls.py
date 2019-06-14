@@ -8,6 +8,7 @@ from django.conf import settings
 import core.views as views
 
 urlpatterns = [
+    url(r"^tweets/$", views.Tweets.as_view()),
     url(r"^$", views.Root.as_view()),
 ]
 

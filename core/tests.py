@@ -48,3 +48,18 @@ class CoreTest(TestCase):
         response = views.Root.as_view()(request, )
         print(response.content)
         self.assertEqual(response.status_code, 200)
+
+    @tag('get', 'getTweets')
+    def test_getTweets(self):
+        # Create an instance of a GET request.
+        vars = dict(keyword=None, )
+        request = self.factory.get('tweets/', vars)
+        add_session_to_request(request)
+
+        # simulating a logged in user
+        request.user = self.user
+
+        # Test Tweets.as_view() as if it were deployed at tweets/
+        response = views.Tweets.as_view()(request, )
+        print(response.content)
+        self.assertEqual(response.status_code, 200)
