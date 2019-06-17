@@ -20,9 +20,11 @@ before_install:
   -in travis-gke-client-secret.json.enc -out travis-gke-client-secret.json -d
 - ls -la travis-gke-client-secret.json
 - pwd
-#install:
+install:
+  skip
 #- pip install -r requirements.txt
-#script:
+script:
+  skip
 #- python manage.py test
 before_deploy:
 - docker build -t ${TRAVIS_REPO_SLUG,,}:${TRAVIS_BRANCH,,} .
