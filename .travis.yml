@@ -4,40 +4,56 @@ python:
 - '3.7'
 services:
 - docker
-env:
-  global:
-  - PROJECT_NAME="spartanx-django"
-  - COMMIT=${TRAVIS_COMMIT::8}
-  - GCLOUD_HOME="$HOME/google-cloud-sdk"
-  - GCLOUD_PATH_APPLY="$GCLOUD_HOME/path.bash.inc"
-  - GCLOUD_ZONE="us-central1-a"
-  - GCLOUD_CLUSTER_NAME="spartanx-gke-cluster"
-  - CI_SCRIPTS="./gke_scripts"
-  - GCLOUD_PROJECT_ID="serene-column-179904"
-  - DEPLOYMENT_YAML="gke-deployment.yaml"
-before_install:
-- openssl aes-256-cbc -K $encrypted_706e60a6745f_key -iv $encrypted_706e60a6745f_iv
-  -in travis-gke-client-secret.json.enc -out travis-gke-client-secret.json -d
-- ls -la
-- pwd
-install:
-  skip
-#- pip install -r requirements.txt
-script:
-  skip
-#- python manage.py test
-#before_deploy:
-#- docker build -t ${TRAVIS_REPO_SLUG,,}:${TRAVIS_BRANCH,,} .
-#- docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
-#- docker push ${TRAVIS_REPO_SLUG,,}:${TRAVIS_BRANCH,,}
-deploy:
-  provider: script
-  script: bash $CI_SCRIPTS/script.sh ${PROJECT_NAME,,} ${TRAVIS_REPO_SLUG,,} ${TRAVIS_REPO_SLUG,,}
-    || travis_terminate 1
-  on:
-    branch: google-kubernetes-engine
-cache:
-  directories:
-  - "$GCLOUD_HOME"
-  - virtualenv
 
+stages:
+  - test
+  - build
+  - deploy
+
+jobs:
+  include:
+    - name: "python unit testing"
+      stage: test
+      install:
+        - pip install -r requirements.txt
+      script:
+        - python manage.py test
+      cache:
+        directories:
+          - virtualenv
+
+    - name: "docker build"
+      stage: build
+      script:
+        - docker build -t ${TRAVIS_REPO_SLUG,,}:${TRAVIS_BRANCH,,} .
+        - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+        - docker push ${TRAVIS_REPO_SLUG,,}:${TRAVIS_BRANCH,,}
+
+    - name: "gke update deployment"
+      stage: deploy
+      env:
+        - PROJECT_NAME="spartanx-django"
+        - COMMIT=${TRAVIS_COMMIT::8}
+        - GCLOUD_HOME="$HOME/google-cloud-sdk"
+        - GCLOUD_PATH_APPLY="$GCLOUD_HOME/path.bash.inc"
+        - GCLOUD_ZONE="us-central1-a"
+        - GCLOUD_CLUSTER_NAME="spartanx-gke-cluster"
+        - CI_SCRIPTS="./gke_scripts"
+        - GCLOUD_PROJECT_ID="serene-column-179904"
+      install:
+        - bash $CI_SCRIPTS/gcloud-install.sh
+      script:
+        skip
+      before_deploy:
+        - openssl aes-256-cbc -K $encrypted_706e60a6745f_key -iv $encrypted_706e60a6745f_iv
+          -in travis-gke-client-secret.json.enc -out travis-gke-client-secret.json -d
+        - bash $CI_SCRIPTS/gcloud-login.sh
+      deploy:
+        provider: script
+        skip_cleanup: true
+        script: bash $CI_SCRIPTS/gke-deploy.sh ${PROJECT_NAME,,} ${TRAVIS_REPO_SLUG,,} ${TRAVIS_BRANCH,,}
+        on:
+          branch: google-kubernetes-engine
+      cache:
+        directories:
+          - $GCLOUD_HOME/

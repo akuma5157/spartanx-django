@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: spartanx-django-dep
+  name: spartanx-django
   labels:
     app: spartanx-django
 spec:
@@ -14,7 +14,7 @@ spec:
     type: RollingUpdate
   template:
     metadata:
-      name: spartanx-django-po
+      name: spartanx-django
       labels:
         app: spartanx-django
     spec:
