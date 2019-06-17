@@ -8,4 +8,6 @@ script:
 - python manage.py test
 deploy:
   provider: script
-  script:
+  script: ./gke-deploy.sh
+  on:
+    all_branches: true
