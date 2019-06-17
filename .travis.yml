@@ -6,8 +6,10 @@ install:
 - pip install -r requirements.txt
 script:
 - python manage.py test
+before_deploy:
+  - bash gcloud-install.sh
 deploy:
   provider: script
-  script: ./gke-deploy.sh
+  script: bash gke-deploy.sh
   on:
     all_branches: true
