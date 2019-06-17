@@ -19,10 +19,11 @@ before_install:
 - openssl aes-256-cbc -K $encrypted_706e60a6745f_key -iv $encrypted_706e60a6745f_iv
   -in travis-gke-client-secret.json.enc -out travis-gke-client-secret.json -d
 - ls -la travis-gke-client-secret.json
-install:
-- pip install -r requirements.txt
-script:
-- python manage.py test
+- pwd
+#install:
+#- pip install -r requirements.txt
+#script:
+#- python manage.py test
 before_deploy:
 - docker build -t ${TRAVIS_REPO_SLUG,,}:${TRAVIS_BRANCH,,} .
 - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
