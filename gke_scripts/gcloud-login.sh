@@ -11,7 +11,7 @@ echo "Login to gcloud and select project"
 # )
 
 # verify mandatory values
-verifyMandatoryValues GCLOUD_KEY GCLOUD_PROJECT_ID GCLOUD_ZONE
+verifyMandatoryValues GCLOUD_PROJECT_ID GCLOUD_ZONE
 
 # temporary file to store credentials from env variable value,
 # because gcloud supports service account logging-in only from file
