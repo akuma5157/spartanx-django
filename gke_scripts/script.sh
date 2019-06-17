@@ -58,7 +58,7 @@ verifyMandatoryValues GCLOUD_PROJECT_ID GCLOUD_ZONE
 GCLOUD_CREDENTIALS="$PWD/travis-gke-client-secret.json"
 
 # Auth, $GCLOUD_KEY must be set in Travis settings
-gcloud auth activate-service-account --key-file "${GCLOUD_CREDENTIALS}"
+gcloud auth activate-service-account --key-file "../${GCLOUD_CREDENTIALS}"
 gcloud config set project "$GCLOUD_PROJECT_ID"
 gcloud config set compute/zone "$GCLOUD_ZONE"
 
