@@ -10,7 +10,7 @@ script:
 - python manage.py test
 before_deploy:
   - bash gcloud-install.sh
-  - docker build -t $TRAVIS_REPO_SLUG:$TRAVIS_BRANCH .
+  - docker build -t ${TRAVIS_REPO_SLUG,,}:${TRAVIS_BRANCH,,} .
   - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
   - docker push $TRAVIS_REPO_SLUG:$TRAVIS_BRANCH
 deploy:
