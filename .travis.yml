@@ -18,7 +18,7 @@ env:
 before_install:
 - openssl aes-256-cbc -K $encrypted_706e60a6745f_key -iv $encrypted_706e60a6745f_iv
   -in travis-gke-client-secret.json.enc -out travis-gke-client-secret.json -d
-- ls -la travis-gke-client-secret.json
+- ls -la
 - pwd
 install:
   skip
@@ -26,10 +26,10 @@ install:
 script:
   skip
 #- python manage.py test
-before_deploy:
-- docker build -t ${TRAVIS_REPO_SLUG,,}:${TRAVIS_BRANCH,,} .
-- docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
-- docker push ${TRAVIS_REPO_SLUG,,}:${TRAVIS_BRANCH,,}
+#before_deploy:
+#- docker build -t ${TRAVIS_REPO_SLUG,,}:${TRAVIS_BRANCH,,} .
+#- docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+#- docker push ${TRAVIS_REPO_SLUG,,}:${TRAVIS_BRANCH,,}
 deploy:
   provider: script
   script: bash $CI_SCRIPTS/script.sh ${PROJECT_NAME,,} ${TRAVIS_REPO_SLUG,,} ${TRAVIS_REPO_SLUG,,}
