@@ -1,3 +1,0 @@
-# [START django_app]
-runtime: python37
-entrypoint: gunicorn -b :$PORT spartanx-django.wsgi
