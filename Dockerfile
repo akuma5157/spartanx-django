@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 
 COPY ./requirements.txt requirements.txt
 RUN apk add --no-cache --virtual .build-deps \
-  build-base mariadb-dev libffi-dev \
+  build-base libffi-dev \
     && pip install -r requirements.txt \
     && find /usr/local \
         \( -type d -a -name test -o -name tests \) \
