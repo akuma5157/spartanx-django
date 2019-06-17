@@ -1,5 +1,7 @@
 #! /bin/bash
 
+ls
+
 # common build scripts
 
 # verify that all the passed arguments exist as environment variable
@@ -55,7 +57,7 @@ verifyMandatoryValues GCLOUD_PROJECT_ID GCLOUD_ZONE
 
 # temporary file to store credentials from env variable value,
 # because gcloud supports service account logging-in only from file
-GCLOUD_CREDENTIALS="$PWD/../travis-gke-client-secret.json"
+GCLOUD_CREDENTIALS="$PWD/travis-gke-client-secret.json"
 
 # Auth, $GCLOUD_KEY must be set in Travis settings
 gcloud auth activate-service-account --key-file "${GCLOUD_CREDENTIALS}"
