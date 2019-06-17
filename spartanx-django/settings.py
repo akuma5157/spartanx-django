@@ -25,7 +25,7 @@ SECRET_KEY = '9_1y=71x)0fl9#=sa3uqr7163bb#25fu7na7v+5(b%j)ty!q&&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['serene-column-179904.appspot.com', 'localhost']
+ALLOWED_HOSTS = ['serene-column-179904.appspot.com', 'localhost', '*']
 
 
 # Application definition

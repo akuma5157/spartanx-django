@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spartanx-django-dep
+  labels:
+    app: spartanx-django
+spec:
+  replicas: 2
+  minReadySeconds: 10
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      name: spartanx-django-po
+      labels:
+        app: spartanx-django
+    spec:
+      containers:
+        - name: django
+          image: spartanaj/spartanx-django:gke
+          imagePullPolicy: Always
+          readinessProbe:
+            periodSeconds: 1
+            httpGet:
+              path: /
+              port: 8000
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: spartanx-django
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spartanx-django
+spec:
+  type: LoadBalancer
+  selector:
+    app: spartanx-django
+  ports:
+    - port: 80
+      targetPort: 8000
+

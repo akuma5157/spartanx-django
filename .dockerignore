@@ -108,3 +108,4 @@ ve/
 
 .git
 .travis.yml
+gke_scripts

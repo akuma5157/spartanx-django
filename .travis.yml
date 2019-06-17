@@ -3,18 +3,41 @@ language: python
 python:
 - '3.7'
 services:
-  - docker
+- docker
+env:
+  global:
+  - PROJECT_NAME="spartanx-django"
+  - COMMIT=${TRAVIS_COMMIT::8}
+  - GCLOUD_HOME="$HOME/google-cloud-sdk"
+  - GCLOUD_PATH_APPLY="$GCLOUD_HOME/path.bash.inc"
+  - GCLOUD_ZONE="us-central1-a"
+  - GCLOUD_CLUSTER_NAME="spartanx-gke-cluster"
+  - CI_SCRIPTS="gke-scripts"
+  - GCLOUD_PROJECT_ID="serene-column-179904"
+
+before_cache:
+- "$CI_SCRIPTS/gcloud-install.sh || travis_terminate 1"
+cache:
+  directories:
+    - $GCLOUD_HOME/
+
+before_install:
+- openssl aes-256-cbc -K $encrypted_706e60a6745f_key -iv $encrypted_706e60a6745f_iv
+  -in travis-gke-client-secret.json.enc -out travis-gke-client-secret.json -d
 install:
 - pip install -r requirements.txt
+
 script:
 - python manage.py test
+
 before_deploy:
-  - bash gcloud-install.sh
-  - docker build -t ${TRAVIS_REPO_SLUG,,}:${TRAVIS_BRANCH,,} .
-  - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
-  - docker push ${TRAVIS_REPO_SLUG,,}:${TRAVIS_BRANCH,,} 
+- docker build -t ${TRAVIS_REPO_SLUG,,}:${TRAVIS_BRANCH,,} .
+- docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+- docker push ${TRAVIS_REPO_SLUG,,}:${TRAVIS_BRANCH,,}
+- $CI_SCRIPTS/gcloud-login.sh || travis_terminate 1
 deploy:
   provider: script
-  script: bash gke-deploy.sh
+  script: bash $CI_SCRIPTS/gke-deploy.sh ${PROJECT_NAME,,} ${TRAVIS_REPO_SLUG,,} ${TRAVIS_REPO_SLUG,,} || travis_terminate 1
   on:
-    all_branches: true
+    branch: google-kubernetes-engine
+
