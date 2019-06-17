@@ -21,5 +21,3 @@ fi
 gcloud version
 
 gcloud config set disable_usage_reporting true
-gcloud --quiet components update kubectl
-

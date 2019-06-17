@@ -25,6 +25,7 @@ jobs:
     - name: "docker build"
       stage: build
       script:
+        - docker pull ${TRAVIS_REPO_SLUG,,}:${TRAVIS_BRANCH,,}
         - docker build -t ${TRAVIS_REPO_SLUG,,}:${TRAVIS_BRANCH,,} .
         - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
         - docker push ${TRAVIS_REPO_SLUG,,}:${TRAVIS_BRANCH,,}
