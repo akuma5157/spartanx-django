@@ -2,7 +2,7 @@
 
 echo "GKE DEPLOY SCRIPT COMES HERE"
 
-sudo apt install -y kubectl
+sudo apt update && sudo apt install -y kubectl
 gcloud container clusters get-credentials "$GCLOUD_CLUSTER_NAME" --zone="$GCLOUD_ZONE"
 
 kubectl set image deployment $1 django=$2:$3
