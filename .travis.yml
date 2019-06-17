@@ -41,8 +41,10 @@ jobs:
         - GCLOUD_CLUSTER_NAME="spartanx-gke-cluster"
         - CI_SCRIPTS="./gke_scripts"
         - GCLOUD_PROJECT_ID="serene-column-179904"
-      install:
+      before_cache:
         - bash $CI_SCRIPTS/gcloud-install.sh
+      install:
+        skip
       script:
         skip
       before_deploy:
@@ -55,6 +57,6 @@ jobs:
         script: bash $CI_SCRIPTS/gke-deploy.sh ${PROJECT_NAME,,} ${TRAVIS_REPO_SLUG,,} ${TRAVIS_BRANCH,,}
         on:
           branch: google-kubernetes-engine
-#      cache:
-#        directories:
-#          - $GCLOUD_HOME/
+      cache:
+        directories:
+          - $GCLOUD_HOME/
