@@ -5,8 +5,6 @@ python:
 before_install:
 - openssl aes-256-cbc -K $encrypted_706e60a6745f_key -iv $encrypted_706e60a6745f_iv
   -in travis-gke-client-secret.json.enc -out travis-gke-client-secret.json -d
-before_cache:
-- bash $CI_SCRIPTS/gcloud-install.sh || travis_terminate 1
 
 services:
 - docker
@@ -22,10 +20,6 @@ env:
   - GCLOUD_PROJECT_ID="serene-column-179904"
   - DEPLOYMENT_YAML="gke-deployment.yaml"
 
-cache:
-  directories:
-    - $GCLOUD_HOME/
-
 install:
 - pip install -r requirements.txt
 
@@ -36,10 +30,9 @@ before_deploy:
 - docker build -t ${TRAVIS_REPO_SLUG,,}:${TRAVIS_BRANCH,,} .
 - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
 - docker push ${TRAVIS_REPO_SLUG,,}:${TRAVIS_BRANCH,,}
-- bash $CI_SCRIPTS/gcloud-login.sh || travis_terminate 1
 deploy:
   provider: script
-  script: bash $CI_SCRIPTS/gke-deploy.sh ${PROJECT_NAME,,} ${TRAVIS_REPO_SLUG,,} ${TRAVIS_REPO_SLUG,,} || travis_terminate 1
+  script: bash $CI_SCRIPTS/script.sh ${PROJECT_NAME,,} ${TRAVIS_REPO_SLUG,,} ${TRAVIS_REPO_SLUG,,} || travis_terminate 1
   on:
     branch: google-kubernetes-engine
 
