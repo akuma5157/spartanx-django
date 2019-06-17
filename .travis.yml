@@ -14,9 +14,10 @@ env:
   - GCLOUD_CLUSTER_NAME="spartanx-gke-cluster"
   - CI_SCRIPTS="./gke_scripts"
   - GCLOUD_PROJECT_ID="serene-column-179904"
+  - DEPLOYMENT_YAML="gke-deployment.yaml"
 
 before_cache:
-- "$CI_SCRIPTS/gcloud-install.sh || travis_terminate 1"
+- bash $CI_SCRIPTS/gcloud-install.sh || travis_terminate 1
 cache:
   directories:
     - $GCLOUD_HOME/
@@ -34,7 +35,7 @@ before_deploy:
 - docker build -t ${TRAVIS_REPO_SLUG,,}:${TRAVIS_BRANCH,,} .
 - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
 - docker push ${TRAVIS_REPO_SLUG,,}:${TRAVIS_BRANCH,,}
-- $CI_SCRIPTS/gcloud-login.sh || travis_terminate 1
+- bash $CI_SCRIPTS/gcloud-login.sh || travis_terminate 1
 deploy:
   provider: script
   script: bash $CI_SCRIPTS/gke-deploy.sh ${PROJECT_NAME,,} ${TRAVIS_REPO_SLUG,,} ${TRAVIS_REPO_SLUG,,} || travis_terminate 1
