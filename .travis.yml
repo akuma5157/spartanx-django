@@ -12,7 +12,7 @@ env:
   - GCLOUD_PATH_APPLY="$GCLOUD_HOME/path.bash.inc"
   - GCLOUD_ZONE="us-central1-a"
   - GCLOUD_CLUSTER_NAME="spartanx-gke-cluster"
-  - CI_SCRIPTS="./gke-scripts"
+  - CI_SCRIPTS="./gke_scripts"
   - GCLOUD_PROJECT_ID="serene-column-179904"
 
 before_cache:
