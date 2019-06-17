@@ -1,7 +1,7 @@
 #! /bin/bash
 
 ls
-
+ls ..
 # common build scripts
 
 # verify that all the passed arguments exist as environment variable
