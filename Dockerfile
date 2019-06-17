@@ -1,5 +1,5 @@
 FROM python:alpine
-MAINTAINER Ajay Kumar <ajay.t.kumar@capgemini.com>
+MAINTAINER Ajay Kumar <ajay.kumar.19495@gmail.com>
 
 WORKDIR /usr/src/app
 
