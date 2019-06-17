@@ -2,8 +2,6 @@ dist: xenial
 language: python
 python:
 - '3.7'
-services:
-- docker
 
 stages:
   - test
@@ -24,6 +22,8 @@ jobs:
 #
 #    - name: "docker build"
 #      stage: build
+#      services:
+#        - docker
 #      script:
 #        - docker pull ${TRAVIS_REPO_SLUG,,}:${TRAVIS_BRANCH,,}
 #        - docker build -t ${TRAVIS_REPO_SLUG,,}:${TRAVIS_BRANCH,,} .
@@ -41,20 +41,18 @@ jobs:
         - GCLOUD_CLUSTER_NAME="spartanx-gke-cluster"
         - CI_SCRIPTS="./gke_scripts"
         - GCLOUD_PROJECT_ID="serene-column-179904"
-#      before_cache:
-#        - bash $CI_SCRIPTS/gcloud-install.sh
       install:
-        skip
+        - bash $CI_SCRIPTS/gcloud-install.sh
       script:
         skip
       before_deploy:
         - openssl aes-256-cbc -K $encrypted_706e60a6745f_key -iv $encrypted_706e60a6745f_iv
           -in travis-gke-client-secret.json.enc -out travis-gke-client-secret.json -d
-#        - bash $CI_SCRIPTS/gcloud-login.sh
+        - bash $CI_SCRIPTS/gcloud-login.sh
       deploy:
         provider: script
         skip_cleanup: true
-        script: bash $CI_SCRIPTS/script.sh ${PROJECT_NAME,,} ${TRAVIS_REPO_SLUG,,} ${TRAVIS_BRANCH,,}
+        script: bash $CI_SCRIPTS/gke-deploy.sh ${PROJECT_NAME,,} ${TRAVIS_REPO_SLUG,,} ${TRAVIS_BRANCH,,}
         on:
           branch: google-kubernetes-engine
 #      cache:
