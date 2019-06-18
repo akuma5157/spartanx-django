@@ -10,25 +10,25 @@ stages:
 
 jobs:
   include:
-#    - name: "python unit testing"
-#      stage: test
-#      install:
-#        - pip install -r requirements.txt
-#      script:
-#        - python manage.py test
-#      cache:
-#        directories:
-#          - virtualenv
-#
-#    - name: "docker build"
-#      stage: build
-#      services:
-#        - docker
-#      script:
-#        - docker pull ${TRAVIS_REPO_SLUG,,}:${TRAVIS_BRANCH,,}
-#        - docker build -t ${TRAVIS_REPO_SLUG,,}:${TRAVIS_BRANCH,,} .
-#        - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
-#        - docker push ${TRAVIS_REPO_SLUG,,}:${TRAVIS_BRANCH,,}
+    - name: "python unit testing"
+      stage: test
+      install:
+        - pip install -r requirements.txt
+      script:
+        - python manage.py test
+      cache:
+        directories:
+          - virtualenv
+
+    - name: "docker build"
+      stage: build
+      services:
+        - docker
+      script:
+        - docker pull ${TRAVIS_REPO_SLUG,,}:${TRAVIS_BRANCH,,}
+        - docker build -t ${TRAVIS_REPO_SLUG,,}:${TRAVIS_BRANCH,,} .
+        - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+        - docker push ${TRAVIS_REPO_SLUG,,}:${TRAVIS_BRANCH,,}
 
     - name: "gke update deployment"
       stage: deploy
